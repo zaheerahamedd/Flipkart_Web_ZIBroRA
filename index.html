@@ -228,18 +228,6 @@
   .toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--dark); color:#fff; border-radius:var(--radius); padding:12px 28px; font-size:14px; font-weight:600; z-index:300; transition:transform .3s; box-shadow:0 8px 24px rgba(0,0,0,0.3); white-space:nowrap; }
   .toast.show { transform:translateX(-50%) translateY(0); }
 
-  .login-overlay { position:fixed; inset:0; background:rgba(21,19,15,.92); z-index:999; display:flex; align-items:center; justify-content:center; padding:20px; }
-  .login-box { background:#fff; border-radius:var(--radius); box-shadow:var(--shadow); padding:40px 32px; width:100%; max-width:380px; }
-  .login-box h2 { font-family:'Sora',sans-serif; font-size:22px; margin-bottom:6px; letter-spacing:.3px; }
-  .login-box .sub-text { color:var(--text2); font-size:13px; margin-bottom:24px; }
-  .login-box label { display:block; font-size:13px; font-weight:600; margin-bottom:6px; }
-  .login-box input { width:100%; padding:12px 14px; border:1.5px solid var(--gray2); border-radius:var(--radius); font-size:14px; margin-bottom:16px; outline:none; }
-  .login-box input:focus { border-color:var(--text); }
-  .btn-login { width:100%; background:var(--primary); color:#fff; border:none; border-radius:var(--radius); padding:13px; font-size:13px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; cursor:pointer; }
-  .btn-login:hover { background:var(--primary-dark); }
-  .login-error { color:var(--danger); font-size:13px; margin-bottom:12px; display:none; }
-  .login-hint { color:var(--text2); font-size:11px; margin-top:14px; text-align:center; }
-
   .modal-overlay { position:fixed; inset:0; background:rgba(14,17,22,0.6); z-index:500; display:none; align-items:center; justify-content:center; padding:20px; }
   .modal-overlay.open { display:flex; }
   .modal-box { background:#fff; border-radius:var(--radius); box-shadow:var(--shadow); padding:32px; width:100%; max-width:420px; max-height:90vh; overflow-y:auto; position:relative; }
@@ -269,20 +257,6 @@
 </head>
 <body>
 
-<!-- LOGIN OVERLAY -->
-<div class="login-overlay" id="loginOverlay">
-  <div class="login-box">
-    <h2>Z Sign in to ZIBRORA</h2>
-    <p class="sub-text">Enter your username and password to continue</p>
-    <div class="login-error" id="loginError">Invalid username or password</div>
-    <label>Username</label>
-    <input type="text" id="loginUser" placeholder="Enter username">
-    <label>Password</label>
-    <input type="password" id="loginPass" placeholder="Enter password">
-    <button class="btn-login" onclick="doLogin()">Login →</button>
-    <p class="login-hint">Demo credentials — username: <b>admin</b> &nbsp;password: <b>1234</b></p>
-  </div>
-</div>
 
 <!-- (contact form now lives at /support as a real page, see page-support below) -->
 
@@ -307,8 +281,7 @@
       <input type="text" id="searchInput" placeholder="Search products, brands and more..." onkeydown="if(event.key==='Enter')runSearch()">
       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" onclick="runSearch()"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     </div>
-    <div class="header-actions">
-      <button class="btn-form-open" onclick="document.getElementById('loginOverlay').style.display='flex'"><span class="icon-glyph">👤</span>Login / Sign Up</button>
+    <div class="header-actions"
       <button class="btn-form-open" onclick="toggleWishlistPanel()"><span class="icon-glyph">♡</span>Wishlist</button>
       <button class="btn-cart" onclick="toggleCart()"><span class="icon-glyph">🛍</span>Cart<span class="cart-badge" id="cartBadge" style="display:none">0</span></button>
     </div>
@@ -1213,21 +1186,7 @@ function placeOrder() {
   navigate('/thankyou/' + orderId);
 }
 
-/* =========================================================
-   LOGIN
-   ========================================================= */
-const VALID_USER = 'admin', VALID_PASS = '1234';
-function doLogin() {
-  const user = document.getElementById('loginUser').value.trim();
-  const pass = document.getElementById('loginPass').value.trim();
-  if (user === VALID_USER && pass === VALID_PASS) {
-    isLoggedIn = true;
-    document.getElementById('loginOverlay').style.display = 'none';
-    router(); // re-fire pageView now that login status is known
-  } else {
-    document.getElementById('loginError').style.display = 'block';
-  }
-}
+/* ========================================================
 
 /* =========================================================
    CONTACT FORM (form_initiated / form_submitted)
